@@ -47,7 +47,7 @@ class UploadFileScreenState extends State<UploadFileScreen> {
           previewData = csvData;
         });
       } else {
-        print('No valid extension or bytes is null.');
+        debugPrint('No valid extension or bytes is null.');
       }
     }
   }
