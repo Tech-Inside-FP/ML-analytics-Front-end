@@ -3,6 +3,7 @@ import 'package:csv/csv.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:ml_analytics/pages/common/go_to_forward_step.dart';
 import 'package:ml_analytics/pages/file_preview_page.dart';
 
 class UploadFileScreen extends StatefulWidget {
@@ -66,34 +67,16 @@ class UploadFileScreenState extends State<UploadFileScreen> {
       final file = pickedFiles.files.single;
       await _processFile(file).then((value) async {
         await Future.delayed(const Duration(seconds: 2)).then((value) {
-          Navigator.of(context)
-              .push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return FilePreviewPage(previewData: previewData);
-                  },
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    var begin = const Offset(1.0, 0.0);
-                    var end = Offset.zero;
-                    var curve = Curves.easeOut;
-
-                    var tween = Tween(begin: begin, end: end)
-                        .chain(CurveTween(curve: curve));
-
-                    return SlideTransition(
-                      position: animation.drive(tween),
-                      child: child,
-                    );
-                  },
-                ),
-              )
-              .then(
-                (value) => setState(() {
-                  isLoading = false;
-                }),
-              );
-        });
+          goToForwardStep(
+            context,
+            FilePreviewPage(previewData: previewData),
+          );
+        }).then(
+          (value) => setState(() {
+            isLoading = false;
+          }),
+        );
+        ;
       });
     }
   }

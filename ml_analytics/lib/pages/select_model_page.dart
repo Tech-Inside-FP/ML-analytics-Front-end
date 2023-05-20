@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ml_analytics/pages/common/go_to_forward_step.dart';
+import 'package:ml_analytics/pages/param_input_page.dart';
 
 class SelectModelPage extends StatelessWidget {
-  const SelectModelPage({super.key});
+  const SelectModelPage({super.key, required this.previewData});
+
+  final List<List<dynamic>> previewData;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,10 @@ class SelectModelPage extends StatelessWidget {
               height: 35,
               width: 120,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => goToForwardStep(
+                  context,
+                  ParamInputPage(previewData: previewData),
+                ),
                 child: const Text('Regressão'),
               ),
             ),
@@ -26,7 +33,10 @@ class SelectModelPage extends StatelessWidget {
               height: 35,
               width: 120,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => goToForwardStep(
+                  context,
+                  ParamInputPage(previewData: previewData),
+                ),
                 child: const Text('Classificação'),
               ),
             ),

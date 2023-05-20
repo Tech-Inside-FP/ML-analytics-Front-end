@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ml_analytics/pages/common/go_to_forward_step.dart';
 import 'package:ml_analytics/pages/select_model_page.dart';
 
 class FilePreviewPage extends StatelessWidget {
@@ -24,28 +25,26 @@ class FilePreviewPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.7,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(border: Border.all()),
-                child: Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        columns: List<DataColumn>.generate(
-                          int.parse(previewData[0].length.toString()),
-                          (colIndex) => const DataColumn(label: Text('')),
-                        ),
-                        rows: previewData
-                            .take(25)
-                            .map<DataRow>(
-                              (row) => DataRow(
-                                cells: row
-                                    .map<DataCell>(
-                                        (cell) => DataCell(Text(cell.toString())))
-                                    .toList(),
-                              ),
-                            )
-                            .toList(),
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      columns: List<DataColumn>.generate(
+                        int.parse(previewData[0].length.toString()),
+                        (colIndex) => const DataColumn(label: Text('')),
                       ),
+                      rows: previewData
+                          .take(25)
+                          .map<DataRow>(
+                            (row) => DataRow(
+                              cells: row
+                                  .map<DataCell>((cell) =>
+                                      DataCell(Text(cell.toString())))
+                                  .toList(),
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                 ),
@@ -67,25 +66,9 @@ class FilePreviewPage extends StatelessWidget {
                     height: 35,
                     width: 120,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                              const SelectModelPage(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            var begin = const Offset(1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.easeOut;
-      
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-      
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
+                      onPressed: () => goToForwardStep(
+                        context,
+                        SelectModelPage(previewData: previewData),
                       ),
                       child: const Text('Avançar'),
                     ),
