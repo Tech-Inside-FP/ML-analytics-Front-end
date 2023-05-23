@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ml_analytics/pages/common/go_to_forward_step.dart';
+import 'package:ml_analytics/pages/processing_model_page.dart';
 
 class ParamOutputPage extends StatefulWidget {
   const ParamOutputPage({
@@ -92,9 +94,11 @@ class _ParamOutputPageState extends State<ParamOutputPage> {
             child: ElevatedButton(
               onPressed: selectedColumn == null
                   ? null
-                  : () {
-                      debugPrint('selected column: $selectedColumn');
-                    },
+                  : () => goToForwardStep(
+                      context,
+                      ProcessingModelPage(
+                        previewData: widget.previewData,
+                      )),
               child: const Text('Avançar'),
             ),
           ),
